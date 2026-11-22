@@ -565,65 +565,78 @@ canvas:fullscreen {
 }
 
 /* =========================================================================
-   SECTION 4: SEPARATED QUIET COLOPHON (TEAM & CREDITS — LOWER HIERARCHY)
+   SECTION 4: REFINED UNDERSTATED COLOPHON (TEAM & CREDITS)
    ========================================================================= */
 .vibe-colophon-zone {
   position: relative;
   z-index: 1;
   width: 100%;
-  margin-top: 120px;
+  margin-top: 104px;
   border-top: 1px solid var(--line-light);
-  background: rgba(226, 226, 220, 0.72);
+  background: var(--stone-elevated);
 }
 
 .colophon-row {
-  border-bottom-color: rgba(17, 17, 19, 0.14);
+  border-bottom-color: var(--line-light);
 }
 
 .vibe-colophon-zone .vibe-cell-left {
-  border-right-color: rgba(17, 17, 19, 0.14);
+  border-right-color: var(--line-light);
 }
 
 .team-quad-tl {
-  padding: 24px 32px;
+  padding: 36px 44px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 32px;
 }
 
-.project-kicker-label {
+.colophon-kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   font-family: var(--font-sans);
-  font-size: 9.5px;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(82, 83, 90, 0.78);
+  color: var(--ink-muted);
+}
+
+.colophon-kicker .vibe-sq {
+  width: 7px;
+  height: 7px;
+}
+
+.colophon-brand-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .colophon-wordmark {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 34px;
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
+  line-height: 1;
+  letter-spacing: -0.01em;
   text-transform: lowercase;
-  color: rgba(17, 17, 19, 0.72);
+  color: var(--ink-black);
 }
 
 .group-helloworld-sub {
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: rgba(82, 83, 90, 0.85);
+  color: var(--ink-muted);
 }
 
 .group-helloworld-sub span {
-  color: rgba(82, 83, 90, 0.65);
-  font-weight: 500;
-  margin-right: 4px;
+  color: var(--ink-black);
+  font-weight: 600;
 }
 
 .team-quad-br {
@@ -632,41 +645,65 @@ canvas:fullscreen {
   flex-direction: column;
 }
 
-.roster-row {
-  padding: 11px 32px;
-  border-bottom: 1px solid rgba(17, 17, 19, 0.1);
+.colophon-grid {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 14px;
-  align-items: baseline;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
 }
 
-.roster-row:last-child {
+.colophon-cell {
+  padding: 26px 32px;
+  border-bottom: 1px solid rgba(17, 17, 19, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.colophon-cell:nth-child(odd) {
+  border-right: 1px solid rgba(17, 17, 19, 0.14);
+}
+
+.colophon-cell:nth-last-child(-n + 2) {
   border-bottom: none;
 }
 
 .roster-label {
-  font-family: var(--font-sans);
-  font-size: 9.5px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(82, 83, 90, 0.72);
+  color: var(--ink-muted);
 }
 
 .roster-value {
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--ink-black);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.roster-sub {
   font-weight: 400;
-  line-height: 1.55;
-  color: rgba(17, 17, 19, 0.72);
+  color: var(--ink-muted);
+}
+
+.member-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .roster-value code {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 500;
-  color: rgba(82, 83, 90, 0.78);
+  font-weight: 400;
+  color: var(--ink-muted);
 }
 
 /* =========================================================================
@@ -675,37 +712,36 @@ canvas:fullscreen {
 .vibe-footer {
   width: 100%;
   padding: 0 var(--rail-w);
-  background: transparent;
+  background: var(--stone-bg);
 }
 
 .vibe-footer-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 40px;
+  min-height: 44px;
 }
 
 .footer-left,
 .footer-right {
-  padding: 10px 32px;
+  padding: 12px 44px;
   display: flex;
   align-items: center;
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(82, 83, 90, 0.78);
+  color: var(--ink-muted);
 }
 
 .footer-left {
-  border-right: 1px solid rgba(17, 17, 19, 0.14);
-  gap: 8px;
+  border-right: 1px solid var(--line-light);
+  gap: 9px;
 }
 
 .footer-left .vibe-sq {
   width: 6px;
   height: 6px;
-  opacity: 0.65;
 }
 
 .footer-right {
@@ -764,9 +800,28 @@ canvas:fullscreen {
     padding: 40px 24px;
   }
 
-  .roster-row {
+  .colophon-grid {
     grid-template-columns: 1fr;
-    gap: 4px;
+  }
+
+  .colophon-cell:nth-child(odd) {
+    border-right: none;
+  }
+
+  .colophon-cell:nth-last-child(-n + 2) {
+    border-bottom: 1px solid rgba(17, 17, 19, 0.14);
+  }
+
+  .colophon-cell:last-child {
+    border-bottom: none;
+  }
+
+  .team-quad-tl,
+  .colophon-cell,
+  .footer-left,
+  .footer-right {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
   .footer-right {
