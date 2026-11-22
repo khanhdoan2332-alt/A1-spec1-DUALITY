@@ -430,29 +430,16 @@ canvas:fullscreen {
 }
 
 .quadrant-tl-terminal {
-  padding: 36px 32px;
-  min-height: 300px;
+  padding: 28px 32px;
+  min-height: 112px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.terminal-log {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.75;
-  color: rgba(244, 244, 240, 0.38);
-  white-space: pre-wrap;
-  user-select: none;
-}
-
-.terminal-log .log-hl {
-  color: rgba(244, 244, 240, 0.72);
-}
-
 .quadrant-tr-meta {
-  padding: 36px 32px;
-  min-height: 300px;
+  padding: 28px 32px;
+  min-height: 112px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -507,37 +494,46 @@ canvas:fullscreen {
 }
 
 /* =========================================================================
-   SECTION 3: EDITORIAL SPLIT ROWS (MODELED ON VIBECON-04.WEBP "REFIK ANADOL")
+   SECTION 3: ABSTRACT & SDG 8 (AIRY 50/50 SPLIT)
    ========================================================================= */
-.strip-intro-left {
-  padding: 24px 32px;
-}
-
-.strip-intro-copy {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1.75;
-  text-transform: uppercase;
-  color: var(--ink-black);
-  max-width: 620px;
-}
-
-.strip-intro-right {
-  padding: 24px 32px;
-  display: flex;
-  align-items: center;
-}
-
-.feature-left-col {
+.abstract-lead-col {
+  padding: 44px 32px 48px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 36px;
 }
 
-.feature-title-box {
-  padding: 28px 32px 24px;
-  border-bottom: 1px solid var(--line-light);
+.sdg-minimal-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 480px;
+}
+
+.sdg-minimal-quote {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-muted);
+}
+
+.sdg-minimal-quote span {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-black);
+  margin-left: 4px;
+}
+
+.abstract-copy-col {
+  padding: 44px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 }
 
 .feature-anta-heading {
@@ -550,84 +546,13 @@ canvas:fullscreen {
   color: var(--ink-black);
 }
 
-.feature-body-box {
-  padding: 28px 32px 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  flex: 1;
-}
-
-.feature-upper-text {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  line-height: 1.8;
-  text-transform: uppercase;
-  color: var(--ink-black);
-  max-width: 580px;
-}
-
 .feature-prose-text {
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--ink-black);
   max-width: 580px;
-}
-
-.feature-right-col {
-  padding: 28px 32px 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.framed-editorial-panel {
-  border: 1px solid var(--line-light);
-  background: var(--stone-elevated);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.panel-sub-block {
-  padding: 26px 28px;
-  border-bottom: 1px solid var(--line-light);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.panel-sub-block:last-child {
-  border-bottom: none;
-}
-
-.panel-index-tag {
-  font-family: var(--font-sans);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--vibe-red);
-}
-
-.panel-sub-heading {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--ink-black);
-}
-
-.panel-sub-copy {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.7;
-  color: var(--ink-black);
 }
 
 /* =========================================================================
