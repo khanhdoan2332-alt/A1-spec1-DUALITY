@@ -44,7 +44,7 @@
               class="vibe-pill-btn"
               >P5.JS ↗</a
             >
-            <button onclick="toggleFull()" class="vibe-pill-btn">FULLSCREEN</button>
+            <button id="btn-fullscreen" onclick="toggleFull()" class="vibe-pill-btn">FULLSCREEN</button>
             <button onclick="saveHighRes()" class="vibe-pill-btn">SAVE</button>
             <button onclick="regenerateArt()" class="vibe-pill-btn pill-primary">RELOAD</button>
           </div>
@@ -918,8 +918,11 @@ function draw() {
   }
 }
 
-function doubleClicked() {
-  toggleFull();
+function doubleClicked(e) {
+  const holder = document.getElementById("canvas-holder");
+  if (holder && e && e.target && holder.contains(e.target)) {
+    toggleFull();
+  }
 }
 
       let reloadTransitionTimer = null;
@@ -948,28 +951,54 @@ function doubleClicked() {
         saveCanvas("COMM2754-26t3-s4135658-A1-GenerativeArt-1920x1080", "png");
       }
 
-      function toggleFull() {
-        scrollToTargetSection("sec-artwork");
-        const holder = document.getElementById("canvas-holder");
-        if (!document.fullscreenElement) {
-          if (holder && holder.requestFullscreen) {
-            holder.requestFullscreen();
-          } else {
-            fullscreen(true);
-          }
-        } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          } else {
-            fullscreen(false);
-          }
+      function syncFullscreenTopbarHeight() {
+        const topbar = document.querySelector(".vibe-topbar");
+        if (topbar) {
+          document.documentElement.style.setProperty("--fs-topbar-h", `${topbar.offsetHeight}px`);
         }
       }
+
+      function setArtFullscreenState(isActive) {
+        document.body.classList.toggle("art-fullscreen", isActive);
+        const btn = document.getElementById("btn-fullscreen");
+        if (btn) btn.textContent = isActive ? "EXIT FULL" : "FULLSCREEN";
+        if (isActive) {
+          syncFullscreenTopbarHeight();
+        }
+      }
+
+      function exitArtFullscreen() {
+        setArtFullscreenState(false);
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      function toggleFull() {
+        const isCurrentlyFull = document.body.classList.contains("art-fullscreen") || Boolean(document.fullscreenElement);
+        if (!isCurrentlyFull) {
+          setArtFullscreenState(true);
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {});
+          }
+        } else {
+          exitArtFullscreen();
+        }
+      }
+
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement && document.body.classList.contains("art-fullscreen")) {
+          setArtFullscreenState(false);
+        } else if (document.fullscreenElement && document.body.classList.contains("art-fullscreen")) {
+          syncFullscreenTopbarHeight();
+        }
+      });
 
       function keyPressed() {
         if (key === "f" || key === "F") toggleFull();
         if (key === "r" || key === "R") regenerateArt();
         if (key === "s" || key === "S") saveHighRes();
+        if (keyCode === ESCAPE && document.body.classList.contains("art-fullscreen")) exitArtFullscreen();
       }
 
       /* =========================================================================
@@ -1344,13 +1373,22 @@ function doubleClicked() {
       window.addEventListener("resize", () => {
         initWebpageBgData();
         renderWebpageBg();
+        if (document.body.classList.contains("art-fullscreen")) {
+          syncFullscreenTopbarHeight();
+        }
       });
 
       window.addEventListener("load", () => {
         document.querySelectorAll(".nav-link[data-target]").forEach(link => {
           link.addEventListener("click", e => {
             e.preventDefault();
-            scrollToTargetSection(link.dataset.target);
+            const target = link.dataset.target;
+            if (document.body.classList.contains("art-fullscreen")) {
+              exitArtFullscreen();
+              setTimeout(() => scrollToTargetSection(target), 80);
+            } else {
+              scrollToTargetSection(target);
+            }
           });
         });
         initWebpageBgData();
