@@ -1534,7 +1534,7 @@ function doubleClicked(e) {
         let finished = false;
         let sweepStarted = false;
         let sweepStart = 0;
-        const sweepDuration = 1150;
+        const sweepDuration = 1320;
 
         function easeOutCubic(t) {
           return 1 - Math.pow(1 - t, 3);
@@ -1557,7 +1557,7 @@ function doubleClicked(e) {
             setTimeout(() => {
               loader.remove();
             }, 700);
-          }, 140);
+          }, 160);
         }
 
         function tick(now) {
