@@ -75,7 +75,7 @@ body.is-loading {
   justify-content: center;
   will-change: clip-path, transform;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.68s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.88s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .loader-panel-left {
@@ -143,8 +143,8 @@ body.is-loading {
   transform: translateY(115%);
   opacity: 0;
   transition:
-    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 42ms),
-    opacity 0.45s ease calc(var(--i) * 42ms);
+    transform 0.78s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 55ms),
+    opacity 0.55s ease calc(var(--i) * 55ms);
 }
 
 .duality-loader.is-active .lw-char {

@@ -1522,7 +1522,7 @@ function doubleClicked(e) {
         let finished = false;
         let sweepStarted = false;
         let sweepStart = 0;
-        const sweepDuration = 1450;
+        const sweepDuration = 1900;
 
         function easeOutCubic(t) {
           return 1 - Math.pow(1 - t, 3);
@@ -1544,8 +1544,8 @@ function doubleClicked(e) {
             document.body.classList.remove("is-loading");
             setTimeout(() => {
               loader.remove();
-            }, 720);
-          }, 180);
+            }, 940);
+          }, 260);
         }
 
         function tick(now) {
@@ -1604,7 +1604,7 @@ function doubleClicked(e) {
         }
 
         // Hard safety failsafe so loader can never get stuck
-        setTimeout(openCurtains, 4200);
+        setTimeout(openCurtains, 5200);
       }
 
       runDualityPreloader();
