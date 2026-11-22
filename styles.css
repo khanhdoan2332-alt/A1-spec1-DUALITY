@@ -860,8 +860,21 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 .sdg-minimal-block {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 460px;
+  gap: 14px;
+  max-width: 480px;
+}
+
+.sdg-minimal-block .vibe-meta-list li {
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  gap: 11px;
+}
+
+.sdg-minimal-block .vibe-sq {
+  width: 11px;
+  height: 11px;
 }
 
 .sdg-minimal-quote {
@@ -974,18 +987,19 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 .colophon-kicker {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   font-family: var(--font-sans);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
   text-transform: uppercase;
   color: var(--ink-black);
 }
 
 .colophon-kicker .vibe-sq {
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
 }
 
 .colophon-brand-group {
