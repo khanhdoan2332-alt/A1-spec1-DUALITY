@@ -892,7 +892,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .team-canvas-window .vibe-split {
   flex: 1;
-  min-height: 48vh;
+  min-height: 28vh;
 }
 
 .colophon-surface {
@@ -904,34 +904,38 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   border-bottom-color: var(--line-light);
 }
 
+.colophon-row .vibe-split {
+  min-height: 27vh;
+}
+
 .vibe-colophon-zone .vibe-cell-left {
   border-right-color: var(--line-light);
 }
 
 .colophon-left-top {
-  padding: 22px 36px;
+  padding: 38px 36px 42px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
+  gap: 20px;
 }
 
 .colophon-role-note {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  line-height: 1.65;
+  line-height: 1.75;
   text-transform: uppercase;
   color: var(--ink-muted);
-  max-width: 460px;
+  max-width: 480px;
 }
 
 .colophon-left-bottom {
-  padding: 20px 36px;
+  padding: 38px 36px 42px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .colophon-kicker {
@@ -939,7 +943,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   align-items: center;
   gap: 9px;
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -947,29 +951,29 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .colophon-kicker .vibe-sq {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 }
 
 .colophon-brand-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .colophon-wordmark {
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: clamp(38px, 4vw, 52px);
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.01em;
+  line-height: 0.96;
+  letter-spacing: -0.015em;
   text-transform: lowercase;
   color: var(--ink-black);
 }
 
 .group-helloworld-sub {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -987,11 +991,11 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .colophon-cell {
-  padding: 20px 32px;
+  padding: 38px 36px 42px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
+  gap: 18px;
 }
 
 .colophon-cell:first-child {
@@ -1000,7 +1004,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .roster-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1009,13 +1013,13 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .roster-value {
   font-family: var(--font-sans);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
-  line-height: 1.65;
+  line-height: 1.72;
   color: var(--ink-black);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
 }
 
 .roster-sub {
