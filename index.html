@@ -14,23 +14,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   </head>
   <body class="is-loading">
-    <!-- DUALITY KINETIC ECHO -> MORPH-TO-HEADER PRELOADER -->
+    <!-- DUALITY MAGNETIC SNAP -> MORPH-TO-HEADER PRELOADER -->
     <div id="duality-loader" class="duality-loader" aria-hidden="true">
-      <div class="loader-bg" id="loader-bg">
-        <div class="loader-meta-bar">
-          <span>GROUP // HELLOWORLD</span>
-          <span class="loader-counter"><span id="loader-percent">00</span>%</span>
-        </div>
+      <div class="loader-bg-half loader-bg-left">
+        <span class="loader-corner loader-bl">GROUP // HELLOWORLD</span>
+      </div>
+      <div class="loader-bg-half loader-bg-right">
+        <span class="loader-corner loader-br"><span id="loader-percent">00</span>%</span>
+      </div>
+
+      <div class="loader-seam">
+        <span class="loader-fulcrum"></span>
       </div>
 
       <div class="loader-logo-stage">
-        <div class="loader-echo-wrap">
-          <span class="loader-echo echo-top-2">duality</span>
-          <span class="loader-echo echo-top-1">duality</span>
-          <span id="loader-core-logo" class="loader-core-logo">duality</span>
-          <span class="loader-echo echo-bot-1">duality</span>
-          <span class="loader-echo echo-bot-2">duality</span>
-          <span id="loader-dot" class="loader-dot"></span>
+        <div id="loader-morph-word" class="loader-morph-word">
+          <span id="loader-dua" class="loader-half-dua">dua</span><span id="loader-lity" class="loader-half-lity">lity</span>
         </div>
       </div>
     </div>
@@ -1517,11 +1516,12 @@ function doubleClicked(e) {
 
       function runDualityPreloader() {
         const loader = document.getElementById("duality-loader");
-        const coreLogo = document.getElementById("loader-core-logo");
+        const morphWord = document.getElementById("loader-morph-word");
+        const duaEl = document.getElementById("loader-dua");
         const targetBrand = document.querySelector(".vibe-topbar .brand-wordmark");
         const pctEl = document.getElementById("loader-percent");
 
-        if (!loader || !coreLogo) {
+        if (!loader || !morphWord) {
           document.body.classList.remove("is-loading");
           return;
         }
@@ -1529,10 +1529,18 @@ function doubleClicked(e) {
         let started = false;
         let finished = false;
         let countStart = 0;
-        const convergeDuration = 580;
+        const snapDuration = 560;
 
         function easeOutQuart(t) {
           return 1 - Math.pow(1 - t, 4);
+        }
+
+        function alignSplitSeam() {
+          if (!duaEl) return;
+          const duaRect = duaEl.getBoundingClientRect();
+          if (duaRect.width > 0) {
+            loader.style.setProperty("--split-x", `${duaRect.right.toFixed(2)}px`);
+          }
         }
 
         function finishImmediately() {
@@ -1545,22 +1553,22 @@ function doubleClicked(e) {
         function launchMorphToHeader() {
           if (finished) return;
           if (pctEl) pctEl.textContent = "100";
-          loader.classList.add("is-converged");
+          loader.classList.add("is-snapped");
 
           setTimeout(() => {
             if (finished) return;
             window.scrollTo(0, 0);
 
             if (targetBrand) {
-              const fromRect = coreLogo.getBoundingClientRect();
+              const fromRect = morphWord.getBoundingClientRect();
               const toRect = targetBrand.getBoundingClientRect();
               const scale = toRect.height / Math.max(1, fromRect.height);
               const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
               const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
 
-              coreLogo.style.setProperty("--morph-x", `${dx.toFixed(2)}px`);
-              coreLogo.style.setProperty("--morph-y", `${dy.toFixed(2)}px`);
-              coreLogo.style.setProperty("--morph-scale", scale.toFixed(4));
+              morphWord.style.setProperty("--morph-x", `${dx.toFixed(2)}px`);
+              morphWord.style.setProperty("--morph-y", `${dy.toFixed(2)}px`);
+              morphWord.style.setProperty("--morph-scale", scale.toFixed(4));
             }
 
             loader.classList.add("is-morphing");
@@ -1568,13 +1576,13 @@ function doubleClicked(e) {
             setTimeout(() => {
               finishImmediately();
             }, 640);
-          }, 110);
+          }, 170);
         }
 
         function tickCounter(now) {
           if (finished) return;
           if (!countStart) countStart = now;
-          const p = Math.min((now - countStart) / convergeDuration, 1);
+          const p = Math.min((now - countStart) / snapDuration, 1);
           const val = Math.round(easeOutQuart(p) * 100);
           if (pctEl) pctEl.textContent = String(val).padStart(2, "0");
 
@@ -1589,7 +1597,9 @@ function doubleClicked(e) {
           if (started || finished) return;
           started = true;
           const startAnim = () => {
+            alignSplitSeam();
             requestAnimationFrame(() => {
+              alignSplitSeam();
               loader.classList.add("is-active");
               requestAnimationFrame(tickCounter);
             });

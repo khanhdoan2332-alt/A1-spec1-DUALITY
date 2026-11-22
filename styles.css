@@ -51,73 +51,134 @@ body.is-loading .vibe-topbar .brand-wordmark {
 }
 
 /* =========================================================================
-   DUALITY KINETIC ECHO -> MORPH-TO-HEADER PRELOADER
+   DUALITY MAGNETIC SNAP -> MORPH-TO-HEADER PRELOADER (CONCEPT 1)
    ========================================================================= */
 .duality-loader {
+  --split-x: 50%;
   position: fixed;
   inset: 0;
   z-index: 20000;
   pointer-events: all;
+  overflow: hidden;
 }
 
 .duality-loader.is-morphing {
   pointer-events: none;
 }
 
-.loader-bg {
+.loader-bg-half {
   position: fixed;
-  inset: 0;
-  background: var(--stone-bg);
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 0.56s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+  top: 0;
+  bottom: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.loader-bg::before,
-.loader-bg::after {
+.loader-bg-left {
+  left: 0;
+  width: var(--split-x);
+  background: var(--stone-bg);
+}
+
+.loader-bg-left::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
+  left: var(--rail-w);
   width: 1px;
   background: var(--line-light);
 }
 
-.loader-bg::before {
-  left: var(--rail-w);
+.loader-bg-right {
+  left: var(--split-x);
+  right: 0;
+  background: var(--dark-bg);
 }
 
-.loader-bg::after {
-  right: var(--rail-w);
-}
-
-.duality-loader.is-morphing .loader-bg {
-  opacity: 0;
-}
-
-.loader-meta-bar {
+.loader-bg-right::after {
+  content: "";
   position: absolute;
-  left: calc(var(--rail-w) + 24px);
-  right: calc(var(--rail-w) + 24px);
+  top: 0;
+  bottom: 0;
+  right: var(--rail-w);
+  width: 1px;
+  background: var(--line-dark);
+}
+
+.duality-loader.is-morphing .loader-bg-left {
+  transform: translate3d(-105%, 0, 0);
+}
+
+.duality-loader.is-morphing .loader-bg-right {
+  transform: translate3d(105%, 0, 0);
+}
+
+.loader-corner {
+  position: absolute;
   bottom: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-muted);
-  transition: opacity 0.22s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
 
-.loader-counter {
-  color: var(--ink-black);
+.duality-loader.is-active .loader-corner {
+  opacity: 1;
+}
+
+.duality-loader.is-morphing .loader-corner {
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.loader-bl {
+  left: calc(var(--rail-w) + 24px);
+  color: var(--ink-muted);
+}
+
+.loader-br {
+  right: calc(var(--rail-w) + 24px);
+  color: var(--dark-ink);
   font-variant-numeric: tabular-nums;
 }
 
-.duality-loader.is-morphing .loader-meta-bar {
+.loader-seam {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: var(--split-x);
+  width: 1px;
+  background: rgba(128, 128, 134, 0.3);
+  z-index: 20001;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.loader-fulcrum {
+  position: absolute;
+  top: calc(50% - 72px);
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  background: var(--vibe-red);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.65, 0.64, 1),
+    opacity 0.2s ease;
+}
+
+.duality-loader.is-snapped .loader-fulcrum {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.duality-loader.is-morphing .loader-seam {
   opacity: 0;
 }
 
@@ -131,154 +192,59 @@ body.is-loading .vibe-topbar .brand-wordmark {
   z-index: 20002;
 }
 
-.loader-echo-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-
-.loader-core-logo,
-.loader-echo {
+.loader-morph-word {
   font-family: var(--font-display);
   font-size: clamp(54px, 7vw, 96px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.02em;
   text-transform: lowercase;
+  display: inline-flex;
+  align-items: baseline;
   white-space: nowrap;
-}
-
-.loader-core-logo {
-  position: relative;
-  z-index: 3;
-  color: var(--ink-black);
-  opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(0.95);
+  user-select: none;
   transform-origin: center center;
-  will-change: transform, opacity;
-  transition:
-    transform 0.56s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.42s ease;
-}
-
-.duality-loader.is-active .loader-core-logo {
-  opacity: 1;
+  will-change: transform;
   transform: translate3d(0, 0, 0) scale(1);
 }
 
-.duality-loader.is-morphing .loader-core-logo {
+.duality-loader.is-morphing .loader-morph-word {
   transform: translate3d(var(--morph-x, 0px), var(--morph-y, 0px), 0) scale(var(--morph-scale, 0.28));
   transition: transform 0.62s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.loader-echo {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  pointer-events: none;
+.loader-half-dua,
+.loader-half-lity {
+  display: inline-block;
+  will-change: transform, opacity, color;
   opacity: 0;
-  will-change: transform, opacity;
 }
 
-.echo-top-2 {
-  -webkit-text-stroke: 1px rgba(17, 17, 19, 0.22);
-  transform: translate3d(0, -54px, 0) scale(1.03);
+.loader-half-dua {
+  color: var(--ink-black);
+  transform: translate3d(0, -68px, 0);
   transition:
-    transform 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.06s,
-    opacity 0.54s ease 0.06s;
+    transform 0.56s cubic-bezier(0.22, 1.18, 0.36, 1),
+    opacity 0.34s ease;
 }
 
-.echo-top-1 {
-  -webkit-text-stroke: 1px rgba(17, 17, 19, 0.44);
-  transform: translate3d(0, -28px, 0) scale(1.015);
+.loader-half-lity {
+  color: var(--dark-ink);
+  transform: translate3d(0, 68px, 0);
   transition:
-    transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.48s ease;
+    transform 0.56s cubic-bezier(0.22, 1.18, 0.36, 1) 0.04s,
+    opacity 0.34s ease 0.04s,
+    color 0.28s ease;
 }
 
-.echo-bot-1 {
-  -webkit-text-stroke: 1px rgba(17, 17, 19, 0.44);
-  transform: translate3d(0, 28px, 0) scale(1.015);
-  transition:
-    transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.48s ease;
-}
-
-.echo-bot-2 {
-  -webkit-text-stroke: 1px rgba(17, 17, 19, 0.22);
-  transform: translate3d(0, 54px, 0) scale(1.03);
-  transition:
-    transform 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.06s,
-    opacity 0.54s ease 0.06s;
-}
-
-/* Pulse visible at start, then glide inward into core logo */
-@keyframes echoConvergeTop2 {
-  0% { opacity: 0; transform: translate3d(0, -60px, 0) scale(1.04); }
-  28% { opacity: 0.85; transform: translate3d(0, -34px, 0) scale(1.02); }
-  100% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes echoConvergeTop1 {
-  0% { opacity: 0; transform: translate3d(0, -32px, 0) scale(1.02); }
-  30% { opacity: 0.95; transform: translate3d(0, -16px, 0) scale(1.01); }
-  100% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes echoConvergeBot1 {
-  0% { opacity: 0; transform: translate3d(0, 32px, 0) scale(1.02); }
-  30% { opacity: 0.95; transform: translate3d(0, 16px, 0) scale(1.01); }
-  100% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes echoConvergeBot2 {
-  0% { opacity: 0; transform: translate3d(0, 60px, 0) scale(1.04); }
-  28% { opacity: 0.85; transform: translate3d(0, 34px, 0) scale(1.02); }
-  100% { opacity: 0; transform: translate3d(0, 0, 0) scale(1); }
-}
-
-.duality-loader.is-active .echo-top-2 {
-  animation: echoConvergeTop2 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.duality-loader.is-active .echo-top-1 {
-  animation: echoConvergeTop1 0.54s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.duality-loader.is-active .echo-bot-1 {
-  animation: echoConvergeBot1 0.54s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.duality-loader.is-active .echo-bot-2 {
-  animation: echoConvergeBot2 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.loader-dot {
-  position: absolute;
-  right: -20px;
-  bottom: 12px;
-  width: 9px;
-  height: 9px;
-  background: var(--vibe-red);
-  transform: scale(0);
-  opacity: 0;
-  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
-}
-
-.duality-loader.is-converged .loader-dot {
-  transform: scale(1);
+.duality-loader.is-active .loader-half-dua,
+.duality-loader.is-active .loader-half-lity {
+  transform: translate3d(0, 0, 0);
   opacity: 1;
 }
 
-.duality-loader.is-morphing .loader-dot {
-  transform: scale(0);
-  opacity: 0;
-  transition: transform 0.16s ease, opacity 0.16s ease;
+.duality-loader.is-morphing .loader-half-lity {
+  color: var(--ink-black);
 }
 
 /* SUBTLE PARALLAX BACKGROUND LAYER */
