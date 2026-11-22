@@ -429,7 +429,7 @@ body.art-fullscreen #canvas-holder {
   margin: 0;
   border: none;
   box-shadow: none;
-  background: #cdd2da;
+  background: var(--stone-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -469,12 +469,16 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 /* =========================================================================
-   SECTION 2: DARK 4-QUADRANT MANIFESTO (MODELED ON VIBECON-02.WEBP)
+   SECTION 2: DARK 4-QUADRANT MANIFESTO (FULL-VIEWPORT DEDICATED ZONE)
    ========================================================================= */
 .vibe-dark-zone {
   background-color: var(--dark-bg);
   color: var(--dark-ink);
   position: relative;
+  min-height: calc(100vh - 54px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .vibe-dark-zone .vibe-row {
@@ -485,17 +489,30 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   border-right-color: var(--line-dark);
 }
 
+.dark-top-row .vibe-split {
+  min-height: 20vh;
+}
+
+.dark-main-row {
+  flex: 1;
+  display: flex;
+}
+
+.dark-main-row .vibe-split {
+  flex: 1;
+}
+
 .quadrant-tl-terminal {
-  padding: 28px 32px;
-  min-height: 116px;
+  padding: 40px 36px;
+  min-height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .quadrant-tr-meta {
-  padding: 28px 32px;
-  min-height: 116px;
+  padding: 40px 36px;
+  min-height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -503,12 +520,12 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .quadrant-bl-context {
-  padding: 40px 32px 52px;
-  min-height: 270px;
+  padding: 64px 36px 76px;
+  min-height: 48vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 28px;
+  gap: 36px;
 }
 
 .dark-upper-copy {
@@ -516,29 +533,29 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  line-height: 1.82;
+  line-height: 1.88;
   text-transform: uppercase;
   color: rgba(244, 244, 240, 0.78);
   max-width: 500px;
 }
 
 .quadrant-br-quote {
-  padding: 40px 32px 52px;
-  min-height: 270px;
+  padding: 64px 36px 76px;
+  min-height: 48vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 24px;
+  gap: 32px;
 }
 
 .dark-manifesto-quote {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.3vw, 48px);
+  font-size: clamp(32px, 3.8vw, 56px);
   font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.01em;
   color: var(--dark-ink);
-  max-width: 600px;
+  max-width: 640px;
 }
 
 .dark-quote-cite {
@@ -551,21 +568,21 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .dark-spacer-row .vibe-split {
-  min-height: 92px;
+  min-height: 18vh;
 }
 
 /* =========================================================================
-   SECTION 3: THE SHIFT & SDG 8 (TAUT SWISS GRID NEGATIVE SPACE)
+   SECTION 3: THE SHIFT, SDG 8 & TARGET AUDIENCE (GENEROUS NEGATIVE SPACE)
    ========================================================================= */
 .shift-lead-col {
-  padding: 48px 32px 56px;
+  padding: 72px 36px 84px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .shift-sdg-col {
-  padding: 48px 32px 56px;
+  padding: 72px 36px 84px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -574,7 +591,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 .sdg-minimal-block {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   max-width: 440px;
 }
 
@@ -582,7 +599,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.82;
   color: var(--ink-muted);
 }
 
@@ -596,7 +613,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .shift-copy-col {
-  padding: 52px 32px 56px;
+  padding: 76px 36px 84px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -604,7 +621,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .feature-anta-heading {
   font-family: var(--font-display);
-  font-size: clamp(38px, 4.8vw, 72px);
+  font-size: clamp(42px, 5vw, 76px);
   font-weight: 400;
   line-height: 0.96;
   letter-spacing: -0.02em;
@@ -616,13 +633,17 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.82;
+  line-height: 1.86;
   color: var(--ink-black);
-  max-width: 520px;
+  max-width: 540px;
 }
 
 .vibe-pause-row .vibe-split {
-  min-height: 92px;
+  min-height: 18vh;
+}
+
+.vibe-pause-deep .vibe-split {
+  min-height: 26vh;
 }
 
 /* =========================================================================
@@ -639,12 +660,16 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   border-bottom-color: var(--line-light);
 }
 
+.colophon-row .vibe-split {
+  min-height: 46vh;
+}
+
 .vibe-colophon-zone .vibe-cell-left {
   border-right-color: var(--line-light);
 }
 
 .team-quad-tl {
-  padding: 32px;
+  padding: 48px 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
