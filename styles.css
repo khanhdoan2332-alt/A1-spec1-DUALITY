@@ -331,8 +331,8 @@ body {
   padding: 32px 32px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
+  justify-content: center;
+  gap: 10px;
 }
 
 .cta-micro-note {
