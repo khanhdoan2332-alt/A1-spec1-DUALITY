@@ -153,6 +153,10 @@ body.is-loading {
 }
 
 .loader-subline {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   font-family: var(--font-sans);
   font-size: 10.5px;
   font-weight: 600;
@@ -161,6 +165,16 @@ body.is-loading {
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.45s ease 0.28s, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
+}
+
+.loader-subline .sub-left {
+  text-align: right;
+  padding-right: 16px;
+}
+
+.loader-subline .sub-right {
+  text-align: left;
+  padding-left: 16px;
 }
 
 .loader-panel-left .loader-subline {
