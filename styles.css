@@ -653,11 +653,11 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .vibe-pause-row .vibe-split {
-  min-height: 18vh;
+  min-height: 26vh;
 }
 
 .vibe-pause-deep .vibe-split {
-  min-height: 26vh;
+  min-height: 58vh;
 }
 
 /* =========================================================================
