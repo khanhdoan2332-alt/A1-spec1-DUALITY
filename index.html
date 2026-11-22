@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Anta&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261122-5" />
+    <link rel="stylesheet" href="styles.css?v=20261122-6" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   </head>
   <body class="is-loading">
@@ -23,8 +23,8 @@
             <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
           </div>
           <p class="loader-subline">
-            <span class="sub-left">WORK WITH CHANGE,</span>
-            <span class="sub-right">NOT AGAINST IT</span>
+            <span class="sub-left"><span class="sub-left-text">WORK WITH CHANGE,</span></span>
+            <span class="sub-right"><span class="sub-right-text">NOT AGAINST IT</span></span>
           </p>
         </div>
         <div class="loader-corner loader-bl">SDG 08 // COMM2754</div>
@@ -37,8 +37,8 @@
             <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
           </div>
           <p class="loader-subline">
-            <span class="sub-left">WORK WITH CHANGE,</span>
-            <span class="sub-right">NOT AGAINST IT</span>
+            <span class="sub-left"><span class="sub-left-text">WORK WITH CHANGE,</span></span>
+            <span class="sub-right"><span class="sub-right-text">NOT AGAINST IT</span></span>
           </p>
         </div>
         <div class="loader-corner loader-br"><span id="loader-percent">00</span>%</div>
@@ -1597,16 +1597,39 @@ function doubleClicked(e) {
           }
         }
 
+        function alignSublineToDuality() {
+          const wordmark = loader.querySelector(".loader-panel-left .loader-wordmark");
+          const subRight = loader.querySelector(".loader-panel-left .sub-right-text");
+          if (!wordmark || !subRight) return;
+          const halfW = wordmark.getBoundingClientRect().width / 2;
+          const rightW = subRight.getBoundingClientRect().width;
+          if (halfW > 0 && rightW > 0) {
+            const gap = Math.max(14, halfW - rightW);
+            loader.style.setProperty("--sub-gap", `${gap.toFixed(1)}px`);
+          }
+        }
+
         function beginSweep() {
           if (sweepStarted || finished) return;
           sweepStarted = true;
-          // Wait 2 clean frames after load/p5 draw so GPU is completely idle for 60fps
-          requestAnimationFrame(() => {
-            loader.classList.add("is-active");
+          const start = () => {
+            alignSublineToDuality();
             requestAnimationFrame(() => {
-              requestAnimationFrame(tick);
+              alignSublineToDuality();
+              loader.classList.add("is-active");
+              requestAnimationFrame(() => {
+                requestAnimationFrame(tick);
+              });
             });
-          });
+          };
+          if (document.fonts && document.fonts.ready) {
+            Promise.race([
+              document.fonts.ready,
+              new Promise(r => setTimeout(r, 400))
+            ]).then(start);
+          } else {
+            start();
+          }
         }
 
         requestAnimationFrame(() => {

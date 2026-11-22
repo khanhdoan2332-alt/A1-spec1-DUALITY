@@ -121,8 +121,7 @@ body.is-loading {
 .loader-center {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: max-content;
+  align-items: center;
   gap: 14px;
   user-select: none;
 }
@@ -159,14 +158,14 @@ body.is-loading {
 }
 
 .loader-subline {
-  width: 100%;
+  width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   font-family: var(--font-sans);
-  font-size: clamp(8.5px, 0.72vw, 10.5px);
+  font-size: clamp(7.5px, 0.88vw, 12px);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   white-space: nowrap;
   opacity: 0;
@@ -175,14 +174,19 @@ body.is-loading {
 }
 
 .loader-subline .sub-left {
-  text-align: left;
-  padding-right: 12px;
+  text-align: right;
+  padding-right: var(--sub-gap, 22px);
 }
 
 .loader-subline .sub-right {
-  text-align: right;
-  padding-left: 12px;
-  margin-right: -0.14em;
+  text-align: left;
+  padding-left: var(--sub-gap, 22px);
+}
+
+.loader-subline .sub-left-text,
+.loader-subline .sub-right-text {
+  display: inline-block;
+  margin-right: -0.22em;
 }
 
 .loader-panel-left .loader-subline {
