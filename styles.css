@@ -349,7 +349,7 @@ body {
    GENERATIVE ARTWORK STAGE (1920x1080 CANVAS IN VIBECON FRAME)
    ========================================================================= */
 .artwork-stage-wrap {
-  padding: 28px 32px 96px;
+  padding: 28px 32px 44px;
   background: rgba(255, 255, 255, 0.35);
 }
 
@@ -430,29 +430,29 @@ canvas:fullscreen {
 }
 
 .quadrant-tl-terminal {
-  padding: 56px 40px 44px;
-  min-height: 200px;
+  padding: 28px 32px;
+  min-height: 116px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .quadrant-tr-meta {
-  padding: 56px 40px 44px;
-  min-height: 200px;
+  padding: 28px 32px;
+  min-height: 116px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 18px;
+  gap: 16px;
 }
 
 .quadrant-bl-context {
-  padding: 56px 40px 88px;
-  min-height: 390px;
+  padding: 40px 32px 52px;
+  min-height: 270px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 36px;
+  gap: 28px;
 }
 
 .dark-upper-copy {
@@ -460,29 +460,29 @@ canvas:fullscreen {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  line-height: 1.9;
+  line-height: 1.82;
   text-transform: uppercase;
   color: rgba(244, 244, 240, 0.78);
-  max-width: 460px;
+  max-width: 500px;
 }
 
 .quadrant-br-quote {
-  padding: 56px 40px 88px;
-  min-height: 390px;
+  padding: 40px 32px 52px;
+  min-height: 270px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 28px;
+  gap: 24px;
 }
 
 .dark-manifesto-quote {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.3vw, 48px);
   font-weight: 400;
-  line-height: 1.14;
+  line-height: 1.12;
   letter-spacing: -0.01em;
   color: var(--dark-ink);
-  max-width: 620px;
+  max-width: 600px;
 }
 
 .dark-quote-cite {
@@ -495,36 +495,34 @@ canvas:fullscreen {
 }
 
 /* =========================================================================
-   SECTION 3: THE SHIFT & SDG 8 (GENEROUS NEGATIVE SPACE & PACED READING)
+   SECTION 3: THE SHIFT & SDG 8 (TAUT SWISS GRID NEGATIVE SPACE)
    ========================================================================= */
 .shift-lead-col {
-  padding: 112px 44px 104px;
-  min-height: 360px;
+  padding: 48px 32px 56px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .shift-sdg-col {
-  padding: 104px 44px 116px;
-  min-height: 340px;
+  padding: 48px 32px 56px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .sdg-minimal-block {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 420px;
+  gap: 14px;
+  max-width: 440px;
 }
 
 .sdg-minimal-quote {
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
-  line-height: 1.85;
+  line-height: 1.8;
   color: var(--ink-muted);
 }
 
@@ -538,18 +536,17 @@ canvas:fullscreen {
 }
 
 .shift-copy-col {
-  padding: 112px 44px 116px;
-  min-height: 340px;
+  padding: 52px 32px 56px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .feature-anta-heading {
   font-family: var(--font-display);
   font-size: clamp(38px, 4.8vw, 72px);
   font-weight: 400;
-  line-height: 0.98;
+  line-height: 0.96;
   letter-spacing: -0.02em;
   text-transform: lowercase;
   color: var(--ink-black);
@@ -559,9 +556,13 @@ canvas:fullscreen {
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.92;
+  line-height: 1.82;
   color: var(--ink-black);
-  max-width: 470px;
+  max-width: 520px;
+}
+
+.vibe-pause-row .vibe-split {
+  min-height: 44px;
 }
 
 /* =========================================================================
@@ -571,8 +572,6 @@ canvas:fullscreen {
   position: relative;
   z-index: 1;
   width: 100%;
-  margin-top: 104px;
-  border-top: 1px solid var(--line-light);
   background: var(--stone-elevated);
 }
 
@@ -585,11 +584,11 @@ canvas:fullscreen {
 }
 
 .team-quad-tl {
-  padding: 36px 44px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 32px;
+  gap: 28px;
 }
 
 .colophon-kicker {
@@ -723,7 +722,7 @@ canvas:fullscreen {
 
 .footer-left,
 .footer-right {
-  padding: 12px 44px;
+  padding: 12px 32px;
   display: flex;
   align-items: center;
   font-family: var(--font-sans);
