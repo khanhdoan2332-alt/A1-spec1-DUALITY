@@ -1386,7 +1386,27 @@ function doubleClicked(e) {
       let activeSectionId = "sec-artwork";
       let scrollAnimFrame = null;
 
+      function setActiveNavSection(secId) {
+        if (!secId) return;
+        activeSectionId = secId;
+        document.querySelectorAll(".vibe-nav .nav-link").forEach(link => {
+          link.classList.toggle("active", link.dataset.target === activeSectionId);
+        });
+      }
+
       function syncHudWithScroll() {
+        // Hiệu ứng Staggered Reveal mượt cho các ô lưới khi cuộn trang
+        document.querySelectorAll(".reveal-cell").forEach((card, idx) => {
+          const cRect = card.getBoundingClientRect();
+          if (cRect.top < window.innerHeight * 0.92) {
+            card.style.transitionDelay = `${(idx % 4) * 55}ms`;
+            card.classList.add("card-visible");
+          }
+        });
+
+        // Không ghi đè pill đang chọn khi đang chạy hiệu ứng cuộn mượt do click menu
+        if (scrollAnimFrame) return;
+
         const sections = ["sec-artwork", "sec-manifesto", "sec-concept", "sec-team"];
         const triggerLine = window.innerHeight * 0.45;
         let nextSection = "sec-artwork";
@@ -1398,28 +1418,30 @@ function doubleClicked(e) {
           }
         });
 
-        if (nextSection !== activeSectionId) {
-          activeSectionId = nextSection;
-          document.querySelectorAll(".vibe-nav .nav-link").forEach(link => {
-            link.classList.toggle("active", link.dataset.target === activeSectionId);
-          });
+        // Vì khối TEAM gọn nằm ở cuối trang, kích hoạt pill TEAM ngay khi cuộn xuống vùng cuối trang
+        const teamEl = document.getElementById("sec-team");
+        const nearPageBottom =
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 140;
+        if (
+          teamEl &&
+          (nearPageBottom || teamEl.getBoundingClientRect().top <= window.innerHeight * 0.78)
+        ) {
+          nextSection = "sec-team";
         }
 
-        // Hiệu ứng Staggered Reveal mượt cho các ô lưới khi cuộn trang
-        document.querySelectorAll(".reveal-cell").forEach((card, idx) => {
-          const cRect = card.getBoundingClientRect();
-          if (cRect.top < window.innerHeight * 0.92) {
-            card.style.transitionDelay = `${(idx % 4) * 55}ms`;
-            card.classList.add("card-visible");
-          }
-        });
+        if (nextSection !== activeSectionId) {
+          setActiveNavSection(nextSection);
+        }
       }
 
       function customSmoothScrollTo(targetY, duration = 780) {
         if (scrollAnimFrame) cancelAnimationFrame(scrollAnimFrame);
         const startY = window.scrollY;
         const diff = targetY - startY;
-        if (Math.abs(diff) < 2) return;
+        if (Math.abs(diff) < 2) {
+          scrollAnimFrame = null;
+          return;
+        }
         const startTime = performance.now();
 
         const easeInOutQuart = t => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
@@ -1439,6 +1461,7 @@ function doubleClicked(e) {
       }
 
       function scrollToTargetSection(sectionId) {
+        setActiveNavSection(sectionId === "sec-top" ? "sec-artwork" : sectionId);
         if (sectionId === "sec-top") {
           customSmoothScrollTo(0, 680);
         } else {
@@ -1446,8 +1469,10 @@ function doubleClicked(e) {
           const topbar = document.querySelector(".vibe-topbar");
           if (targetEl) {
             const topbarH = topbar ? topbar.offsetHeight : 54;
-            const targetY = targetEl.getBoundingClientRect().top + window.scrollY - topbarH;
-            customSmoothScrollTo(Math.max(0, targetY), 680);
+            const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            const rawTargetY = targetEl.getBoundingClientRect().top + window.scrollY - topbarH;
+            const targetY = Math.min(maxScrollY, Math.max(0, rawTargetY));
+            customSmoothScrollTo(targetY, 680);
           }
         }
       }

@@ -368,6 +368,7 @@ body.is-loading {
   text-decoration: none;
   padding: 5px 12px;
   border-radius: 999px;
+  outline: none;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
