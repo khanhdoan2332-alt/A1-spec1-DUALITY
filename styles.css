@@ -264,10 +264,10 @@ body {
    SECTION 1: HERO BRAND BANNER & STATEMENT (MODELED ON VIBECON.WEBP & 05)
    ========================================================================= */
 .hero-brand-cell {
-  padding: 28px 32px 24px;
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .hero-duality-title {
@@ -281,34 +281,21 @@ body {
 }
 
 .hero-meta-cell {
-  padding: 28px 32px 24px;
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 14px;
+  justify-content: center;
 }
 
 .hero-kicker-copy {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.07em;
-  line-height: 1.7;
+  letter-spacing: 0.08em;
+  line-height: 1.75;
   text-transform: uppercase;
   color: var(--ink-black);
   max-width: 540px;
-}
-
-.hero-sub-coords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  font-family: var(--font-sans);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
 }
 
 /* STATEMENT ROW ABOVE ARTWORK (MODELED ON VIBECON-05.WEBP) */
