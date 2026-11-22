@@ -401,7 +401,8 @@ body.art-fullscreen {
 
 body.art-fullscreen .vibe-rail-overlay {
   display: block;
-  z-index: 10005;
+  top: var(--fs-topbar-h, 55px);
+  z-index: 9998;
 }
 
 body.art-fullscreen .vibe-topbar {
