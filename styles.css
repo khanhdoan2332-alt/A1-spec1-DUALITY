@@ -46,15 +46,11 @@ body.is-loading {
   overflow: hidden;
 }
 
-body.is-loading .vibe-topbar .brand-wordmark {
-  opacity: 0;
-}
-
 /* =========================================================================
-   DUALITY MAGNETIC SNAP -> MORPH-TO-HEADER PRELOADER (CONCEPT 1)
+   DUALITY ARCHITECTURAL SPLIT-CURTAIN PRELOADER
    ========================================================================= */
 .duality-loader {
-  --split-x: 50%;
+  --seam: 50%;
   position: fixed;
   inset: 0;
   z-index: 20000;
@@ -62,26 +58,33 @@ body.is-loading .vibe-topbar .brand-wordmark {
   overflow: hidden;
 }
 
-.duality-loader.is-morphing {
+.duality-loader.is-opening {
   pointer-events: none;
 }
 
-.loader-bg-half {
+.duality-loader.is-fading-simple {
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.loader-panel {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  will-change: transform;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: clip-path, transform;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.68s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.loader-bg-left {
-  left: 0;
-  width: var(--split-x);
+.loader-panel-left {
   background: var(--stone-bg);
+  color: var(--ink-black);
+  clip-path: inset(0 calc(100% - var(--seam)) 0 0);
 }
 
-.loader-bg-left::before {
+.loader-panel-left::before {
   content: "";
   position: absolute;
   top: 0;
@@ -91,13 +94,13 @@ body.is-loading .vibe-topbar .brand-wordmark {
   background: var(--line-light);
 }
 
-.loader-bg-right {
-  left: var(--split-x);
-  right: 0;
+.loader-panel-right {
   background: var(--dark-bg);
+  color: var(--dark-ink);
+  clip-path: inset(0 0 0 var(--seam));
 }
 
-.loader-bg-right::after {
+.loader-panel-right::after {
   content: "";
   position: absolute;
   top: 0;
@@ -107,41 +110,107 @@ body.is-loading .vibe-topbar .brand-wordmark {
   background: var(--line-dark);
 }
 
-.duality-loader.is-morphing .loader-bg-left {
-  transform: translate3d(-105%, 0, 0);
+.duality-loader.is-opening .loader-panel-left {
+  transform: translate3d(-54vw, 0, 0);
 }
 
-.duality-loader.is-morphing .loader-bg-right {
-  transform: translate3d(105%, 0, 0);
+.duality-loader.is-opening .loader-panel-right {
+  transform: translate3d(54vw, 0, 0);
+}
+
+.loader-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+
+.loader-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 7.6vw, 108px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  display: inline-flex;
+  overflow: hidden;
+  padding: 6px 4px;
+}
+
+.lw-char {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition:
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 42ms),
+    opacity 0.45s ease calc(var(--i) * 42ms);
+}
+
+.duality-loader.is-active .lw-char {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.loader-subline {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease 0.28s, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
+}
+
+.loader-panel-left .loader-subline {
+  color: var(--ink-muted);
+}
+
+.loader-panel-right .loader-subline {
+  color: var(--dark-muted);
+}
+
+.duality-loader.is-active .loader-subline {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .loader-corner {
   position: absolute;
-  bottom: 22px;
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.4s ease 0.15s;
 }
 
 .duality-loader.is-active .loader-corner {
   opacity: 1;
 }
 
-.duality-loader.is-morphing .loader-corner {
-  opacity: 0;
-  transition: opacity 0.18s ease;
-}
-
-.loader-bl {
+.loader-tl {
+  top: 22px;
   left: calc(var(--rail-w) + 24px);
   color: var(--ink-muted);
 }
 
+.loader-bl {
+  bottom: 22px;
+  left: calc(var(--rail-w) + 24px);
+  color: var(--ink-muted);
+}
+
+.loader-tr {
+  top: 22px;
+  right: calc(var(--rail-w) + 24px);
+  color: var(--dark-muted);
+}
+
 .loader-br {
+  bottom: 22px;
   right: calc(var(--rail-w) + 24px);
   color: var(--dark-ink);
   font-variant-numeric: tabular-nums;
@@ -151,100 +220,36 @@ body.is-loading .vibe-topbar .brand-wordmark {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: var(--split-x);
+  left: var(--seam);
   width: 1px;
-  background: rgba(128, 128, 134, 0.3);
-  z-index: 20001;
+  background: rgba(128, 128, 134, 0.35);
+  z-index: 20005;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.22s ease;
 }
 
 .loader-fulcrum {
   position: absolute;
-  top: calc(50% - 72px);
+  top: calc(50% - 86px);
   left: 50%;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   background: var(--vibe-red);
   transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition:
-    transform 0.32s cubic-bezier(0.34, 1.65, 0.64, 1),
-    opacity 0.2s ease;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
 }
 
-.duality-loader.is-snapped .loader-fulcrum {
+.duality-loader.is-active .loader-fulcrum {
   transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
 }
 
-.duality-loader.is-morphing .loader-seam {
+.duality-loader.is-locked .loader-fulcrum {
+  transform: translate(-50%, -50%) scale(1.35);
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.duality-loader.is-opening .loader-seam {
   opacity: 0;
-}
-
-.loader-logo-stage {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 20002;
-}
-
-.loader-morph-word {
-  font-family: var(--font-display);
-  font-size: clamp(54px, 7vw, 96px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: lowercase;
-  display: inline-flex;
-  align-items: baseline;
-  white-space: nowrap;
-  user-select: none;
-  transform-origin: center center;
-  will-change: transform;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-.duality-loader.is-morphing .loader-morph-word {
-  transform: translate3d(var(--morph-x, 0px), var(--morph-y, 0px), 0) scale(var(--morph-scale, 0.28));
-  transition: transform 0.62s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.loader-half-dua,
-.loader-half-lity {
-  display: inline-block;
-  will-change: transform, opacity, color;
-  opacity: 0;
-}
-
-.loader-half-dua {
-  color: var(--ink-black);
-  transform: translate3d(0, -68px, 0);
-  transition:
-    transform 0.56s cubic-bezier(0.22, 1.18, 0.36, 1),
-    opacity 0.34s ease;
-}
-
-.loader-half-lity {
-  color: var(--dark-ink);
-  transform: translate3d(0, 68px, 0);
-  transition:
-    transform 0.56s cubic-bezier(0.22, 1.18, 0.36, 1) 0.04s,
-    opacity 0.34s ease 0.04s,
-    color 0.28s ease;
-}
-
-.duality-loader.is-active .loader-half-dua,
-.duality-loader.is-active .loader-half-lity {
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-}
-
-.duality-loader.is-morphing .loader-half-lity {
-  color: var(--ink-black);
 }
 
 /* SUBTLE PARALLAX BACKGROUND LAYER */
