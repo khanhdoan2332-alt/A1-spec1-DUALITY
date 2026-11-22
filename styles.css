@@ -349,7 +349,7 @@ body {
    GENERATIVE ARTWORK STAGE (1920x1080 CANVAS IN VIBECON FRAME)
    ========================================================================= */
 .artwork-stage-wrap {
-  padding: 28px 32px 24px;
+  padding: 28px 32px 96px;
   background: rgba(255, 255, 255, 0.35);
 }
 
@@ -430,16 +430,16 @@ canvas:fullscreen {
 }
 
 .quadrant-tl-terminal {
-  padding: 28px 32px;
-  min-height: 112px;
+  padding: 56px 40px 44px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .quadrant-tr-meta {
-  padding: 28px 32px;
-  min-height: 112px;
+  padding: 56px 40px 44px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -447,12 +447,12 @@ canvas:fullscreen {
 }
 
 .quadrant-bl-context {
-  padding: 36px 32px 44px;
-  min-height: 290px;
+  padding: 56px 40px 88px;
+  min-height: 390px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 24px;
+  gap: 36px;
 }
 
 .dark-upper-copy {
@@ -460,28 +460,29 @@ canvas:fullscreen {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  line-height: 1.8;
+  line-height: 1.9;
   text-transform: uppercase;
   color: rgba(244, 244, 240, 0.78);
-  max-width: 540px;
+  max-width: 460px;
 }
 
 .quadrant-br-quote {
-  padding: 36px 32px 44px;
-  min-height: 290px;
+  padding: 56px 40px 88px;
+  min-height: 390px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
+  gap: 28px;
 }
 
 .dark-manifesto-quote {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.3vw, 48px);
   font-weight: 400;
-  line-height: 1.12;
+  line-height: 1.14;
   letter-spacing: -0.01em;
   color: var(--dark-ink);
+  max-width: 620px;
 }
 
 .dark-quote-cite {
@@ -494,33 +495,41 @@ canvas:fullscreen {
 }
 
 /* =========================================================================
-   SECTION 3: ABSTRACT & SDG 8 (AIRY 50/50 SPLIT)
+   SECTION 3: THE SHIFT & SDG 8 (GENEROUS NEGATIVE SPACE & PACED READING)
    ========================================================================= */
-.abstract-lead-col {
-  padding: 44px 32px 48px;
+.shift-lead-col {
+  padding: 112px 44px 104px;
+  min-height: 360px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 36px;
+  justify-content: flex-start;
+}
+
+.shift-sdg-col {
+  padding: 104px 44px 116px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sdg-minimal-block {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 480px;
+  gap: 16px;
+  max-width: 420px;
 }
 
 .sdg-minimal-quote {
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.85;
   color: var(--ink-muted);
 }
 
 .sdg-minimal-quote span {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -528,12 +537,12 @@ canvas:fullscreen {
   margin-left: 4px;
 }
 
-.abstract-copy-col {
-  padding: 44px 32px 48px;
+.shift-copy-col {
+  padding: 112px 44px 116px;
+  min-height: 340px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
 }
 
 .feature-anta-heading {
@@ -550,9 +559,9 @@ canvas:fullscreen {
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.92;
   color: var(--ink-black);
-  max-width: 580px;
+  max-width: 470px;
 }
 
 /* =========================================================================
@@ -562,7 +571,7 @@ canvas:fullscreen {
   position: relative;
   z-index: 1;
   width: 100%;
-  margin-top: 64px;
+  margin-top: 120px;
   border-top: 1px solid var(--line-light);
   background: rgba(226, 226, 220, 0.72);
 }
@@ -739,6 +748,20 @@ canvas:fullscreen {
 
   .vibe-dark-zone .vibe-cell-left {
     border-bottom: 1px solid var(--line-dark);
+  }
+
+  .quadrant-tl-terminal {
+    display: none;
+  }
+
+  .quadrant-tr-meta,
+  .quadrant-bl-context,
+  .quadrant-br-quote,
+  .shift-lead-col,
+  .shift-sdg-col,
+  .shift-copy-col {
+    min-height: auto;
+    padding: 40px 24px;
   }
 
   .roster-row {
