@@ -250,33 +250,34 @@
           </div>
         </div>
       </section>
+    </main>
 
-      <!-- ARCHITECTURAL BREATHING BAND BETWEEN THE SHIFT & TEAM -->
-      <div class="vibe-row vibe-pause-row vibe-pause-deep" aria-hidden="true">
+    <!-- FULL-VIEWPORT TEAM & PROJECT CREDITS SCREEN (UPPER CANVAS WINDOW + ALIGNED 2-ROW COLOPHON GRID) -->
+    <aside class="vibe-colophon-zone" id="sec-team" aria-label="Team and Project Credits">
+      <!-- UPPER ARCHITECTURAL NEGATIVE-SPACE WINDOW (LOCKS FLUSH TO TOPBAR ON SCROLL) -->
+      <div class="vibe-row team-canvas-window" aria-hidden="true">
         <div class="vibe-split">
           <div class="vibe-cell-left"></div>
           <div></div>
         </div>
       </div>
-    </main>
 
-    <!-- SEPARATED COLOPHON: TEAM & PROJECT CREDITS -->
-    <aside class="vibe-colophon-zone" id="sec-team" aria-label="Team and Project Credits">
-      <section class="vibe-row colophon-row">
-        <div class="vibe-split">
-          <div class="vibe-cell-left team-quad-tl reveal-cell">
-            <div class="colophon-kicker">
-              <span class="vibe-sq"></span>
-              <span>TEAM &amp; CREDITS</span>
+      <!-- LOWER COLOPHON SURFACE: 2 FULL-WIDTH ALIGNED GRID ROWS -->
+      <div class="colophon-surface">
+        <!-- COLOPHON ROW 1: KICKER (LEFT) | 01 AUTHOR + 02 GROUP MEMBERS (RIGHT) -->
+        <section class="vibe-row colophon-row">
+          <div class="vibe-split">
+            <div class="vibe-cell-left colophon-left-top reveal-cell">
+              <div class="colophon-kicker">
+                <span class="vibe-sq"></span>
+                <span>TEAM &amp; CREDITS</span>
+              </div>
+              <p class="colophon-role-note">
+                INDIVIDUAL GENERATIVE ARTWORK, INTERACTIVE EXHIBITION WEBPAGE &amp; GROUP CONCEPTUAL RESEARCH
+              </p>
             </div>
-            <div class="colophon-brand-group">
-              <p class="colophon-wordmark">duality</p>
-              <p class="group-helloworld-sub"><span>GROUP HELLOWORLD</span> · NOVEMBER 22, 2026</p>
-            </div>
-          </div>
 
-          <div class="team-quad-br reveal-cell">
-            <div class="colophon-grid">
+            <div class="colophon-right-subgrid reveal-cell">
               <div class="colophon-cell">
                 <span class="roster-label">01 / AUTHOR</span>
                 <div class="roster-value">
@@ -284,6 +285,7 @@
                     <span>Doan Nguyen Ngoc Khanh</span>
                     <code>s4135658</code>
                   </div>
+                  <span class="roster-sub">Generative Artwork &amp; Interactive Webpage</span>
                 </div>
               </div>
 
@@ -304,11 +306,25 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
+        <!-- COLOPHON ROW 2: DUALITY BRAND (LEFT) | 03 COURSE + 04 AFFILIATION (RIGHT) -->
+        <section class="vibe-row colophon-row">
+          <div class="vibe-split">
+            <div class="vibe-cell-left colophon-left-bottom reveal-cell">
+              <div class="colophon-brand-group">
+                <p class="colophon-wordmark">duality</p>
+                <p class="group-helloworld-sub"><span>GROUP HELLOWORLD</span> · NOVEMBER 22, 2026</p>
+              </div>
+            </div>
+
+            <div class="colophon-right-subgrid reveal-cell">
               <div class="colophon-cell">
                 <span class="roster-label">03 / COURSE</span>
                 <div class="roster-value">
-                  COMM2754 — Digital Media Specialisation 1<br />
+                  <span>COMM2754 — Digital Media Specialisation 1</span>
                   <span class="roster-sub">Vietnam Semester 3, 2026 (26t3)</span>
                 </div>
               </div>
@@ -316,14 +332,14 @@
               <div class="colophon-cell">
                 <span class="roster-label">04 / AFFILIATION</span>
                 <div class="roster-value">
-                  RMIT University Vietnam, Saigon South Campus<br />
+                  <span>RMIT University Vietnam, Saigon South Campus</span>
                   <span class="roster-sub">School of Communication &amp; Design · Digital Media</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <!-- VIBECON PERSISTENT BOTTOM FOOTER BAR -->
       <footer class="vibe-footer">
@@ -1418,14 +1434,10 @@ function doubleClicked(e) {
           }
         });
 
-        // Vì khối TEAM gọn nằm ở cuối trang, kích hoạt pill TEAM ngay khi cuộn xuống vùng cuối trang
         const teamEl = document.getElementById("sec-team");
         const nearPageBottom =
-          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 140;
-        if (
-          teamEl &&
-          (nearPageBottom || teamEl.getBoundingClientRect().top <= window.innerHeight * 0.78)
-        ) {
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+        if (teamEl && nearPageBottom) {
           nextSection = "sec-team";
         }
 

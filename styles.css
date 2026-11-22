@@ -872,11 +872,30 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 /* =========================================================================
-   SECTION 4: REFINED UNDERSTATED COLOPHON (TEAM & CREDITS — COMPACT)
+   SECTION 4: FULL-VIEWPORT TEAM SCREEN & ALIGNED 2-ROW COLOPHON GRID
    ========================================================================= */
 .vibe-colophon-zone {
   position: relative;
   z-index: 1;
+  width: 100%;
+  min-height: calc(100vh - 54px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+}
+
+.team-canvas-window {
+  flex: 1;
+  display: flex;
+}
+
+.team-canvas-window .vibe-split {
+  flex: 1;
+  min-height: 48vh;
+}
+
+.colophon-surface {
   width: 100%;
   background: var(--stone-elevated);
 }
@@ -889,12 +908,30 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   border-right-color: var(--line-light);
 }
 
-.team-quad-tl {
-  padding: 22px 32px;
+.colophon-left-top {
+  padding: 22px 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
+}
+
+.colophon-role-note {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.65;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  max-width: 460px;
+}
+
+.colophon-left-bottom {
+  padding: 20px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .colophon-kicker {
@@ -906,7 +943,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--ink-black);
 }
 
 .colophon-kicker .vibe-sq {
@@ -922,7 +959,7 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .colophon-wordmark {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -944,32 +981,21 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   font-weight: 600;
 }
 
-.team-quad-br {
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.colophon-grid {
+.colophon-right-subgrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100%;
 }
 
 .colophon-cell {
-  padding: 18px 28px;
-  border-bottom: 1px solid rgba(17, 17, 19, 0.14);
+  padding: 20px 32px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.colophon-cell:nth-child(odd) {
-  border-right: 1px solid rgba(17, 17, 19, 0.14);
-}
-
-.colophon-cell:nth-last-child(-n + 2) {
-  border-bottom: none;
+.colophon-cell:first-child {
+  border-right: 1px solid rgba(17, 17, 19, 0.16);
 }
 
 .roster-label {
