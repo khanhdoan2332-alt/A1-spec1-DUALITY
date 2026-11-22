@@ -13,7 +13,36 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   </head>
-  <body>
+  <body class="is-loading">
+    <!-- DUALITY ARCHITECTURAL SPLIT-CURTAIN PRELOADER -->
+    <div id="duality-loader" class="duality-loader" aria-hidden="true">
+      <div class="loader-panel loader-panel-left">
+        <div class="loader-corner loader-tl">GROUP // HELLOWORLD</div>
+        <div class="loader-center">
+          <div class="loader-wordmark">
+            <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
+          </div>
+          <p class="loader-subline">WORK WITH CHANGE, NOT AGAINST IT</p>
+        </div>
+        <div class="loader-corner loader-bl">SDG 08 // COMM2754</div>
+      </div>
+
+      <div class="loader-panel loader-panel-right">
+        <div class="loader-corner loader-tr">EXHIBITION // 2026</div>
+        <div class="loader-center">
+          <div class="loader-wordmark">
+            <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
+          </div>
+          <p class="loader-subline">WORK WITH CHANGE, NOT AGAINST IT</p>
+        </div>
+        <div class="loader-corner loader-br"><span id="loader-percent">00</span>%</div>
+      </div>
+
+      <div class="loader-seam" id="loader-seam">
+        <span class="loader-fulcrum"></span>
+      </div>
+    </div>
+
     <!-- SUBTLE PARALLAX IRIDESCENT MIST & 3D WAFER BACKGROUND -->
     <div class="blueprint-bg-layer" aria-hidden="true">
       <canvas id="bg-wafer-mist"></canvas>
@@ -1424,7 +1453,11 @@ function doubleClicked(e) {
       }
 
       function animateParallaxLoop() {
-        if (!isArtReloading && !document.body.classList.contains("art-fullscreen")) {
+        if (
+          !isArtReloading &&
+          !document.body.classList.contains("art-fullscreen") &&
+          !document.body.classList.contains("is-loading")
+        ) {
           bgParallax.targetScroll = window.scrollY || 0;
           bgParallax.currentScroll += (bgParallax.targetScroll - bgParallax.currentScroll) * 0.09;
           bgParallax.currentMouseX += (bgParallax.targetMouseX - bgParallax.currentMouseX) * 0.07;
@@ -1452,6 +1485,97 @@ function doubleClicked(e) {
           syncFullscreenTopbarHeight();
         }
       });
+
+      function runDualityPreloader() {
+        const loader = document.getElementById("duality-loader");
+        const pctEl = document.getElementById("loader-percent");
+        if (!loader) {
+          document.body.classList.remove("is-loading");
+          return;
+        }
+
+        const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) {
+          loader.classList.add("is-fading-simple");
+          setTimeout(() => {
+            loader.remove();
+            document.body.classList.remove("is-loading");
+          }, 260);
+          return;
+        }
+
+        let pageLoaded = document.readyState === "complete";
+        let finished = false;
+        const startTime = performance.now();
+        const animDuration = 1180;
+
+        window.addEventListener("load", () => {
+          pageLoaded = true;
+        }, { once: true });
+
+        function easeOutCubic(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+
+        function easeInOutSine(t) {
+          return -(Math.cos(Math.PI * t) - 1) / 2;
+        }
+
+        function openCurtains() {
+          if (finished) return;
+          finished = true;
+          loader.style.setProperty("--seam", "50%");
+          if (pctEl) pctEl.textContent = "100";
+          loader.classList.add("is-locked");
+
+          setTimeout(() => {
+            loader.classList.add("is-opening");
+            document.body.classList.remove("is-loading");
+            setTimeout(() => {
+              loader.remove();
+            }, 720);
+          }, 140);
+        }
+
+        function tick(now) {
+          if (finished) return;
+          const elapsed = now - startTime;
+          const p = Math.min(elapsed / animDuration, 1);
+
+          // Damped Wu Wei pendulum sweep across the wordmark: 50% -> 34% -> 66% -> 50%
+          let seam = 50;
+          if (p < 0.35) {
+            const k = easeInOutSine(p / 0.35);
+            seam = 50 - 16 * k;
+          } else if (p < 0.75) {
+            const k = easeInOutSine((p - 0.35) / 0.40);
+            seam = 34 + 32 * k;
+          } else {
+            const k = easeInOutSine((p - 0.75) / 0.25);
+            seam = 66 - 16 * k;
+          }
+
+          loader.style.setProperty("--seam", `${seam.toFixed(2)}%`);
+
+          const displayPct = Math.min(100, Math.round(easeOutCubic(p) * (pageLoaded ? 100 : 94)));
+          if (pctEl) pctEl.textContent = String(displayPct).padStart(2, "0");
+
+          if (p >= 1 && pageLoaded) {
+            openCurtains();
+          } else if (elapsed >= 2600) {
+            openCurtains();
+          } else {
+            requestAnimationFrame(tick);
+          }
+        }
+
+        requestAnimationFrame(() => {
+          loader.classList.add("is-active");
+          requestAnimationFrame(tick);
+        });
+      }
+
+      runDualityPreloader();
 
       window.addEventListener("load", () => {
         document.querySelectorAll(".nav-link[data-target]").forEach(link => {
