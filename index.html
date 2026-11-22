@@ -1519,24 +1519,10 @@ function doubleClicked(e) {
           return;
         }
 
-        const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduceMotion) {
-          loader.classList.add("is-fading-simple");
-          setTimeout(() => {
-            loader.remove();
-            document.body.classList.remove("is-loading");
-          }, 260);
-          return;
-        }
-
-        let pageLoaded = document.readyState === "complete";
         let finished = false;
-        const startTime = performance.now();
-        const animDuration = 1180;
-
-        window.addEventListener("load", () => {
-          pageLoaded = true;
-        }, { once: true });
+        let sweepStarted = false;
+        let sweepStart = 0;
+        const sweepDuration = 1450;
 
         function easeOutCubic(t) {
           return 1 - Math.pow(1 - t, 3);
@@ -1559,45 +1545,66 @@ function doubleClicked(e) {
             setTimeout(() => {
               loader.remove();
             }, 720);
-          }, 140);
+          }, 180);
         }
 
         function tick(now) {
           if (finished) return;
-          const elapsed = now - startTime;
-          const p = Math.min(elapsed / animDuration, 1);
+          if (!sweepStart) sweepStart = now;
+          const elapsed = now - sweepStart;
+          const p = Math.min(elapsed / sweepDuration, 1);
 
-          // Damped Wu Wei pendulum sweep across the wordmark: 50% -> 34% -> 66% -> 50%
+          // Damped Wu Wei pendulum sweep across the wordmark: 50% -> 28% -> 72% -> 50%
           let seam = 50;
-          if (p < 0.35) {
-            const k = easeInOutSine(p / 0.35);
-            seam = 50 - 16 * k;
-          } else if (p < 0.75) {
-            const k = easeInOutSine((p - 0.35) / 0.40);
-            seam = 34 + 32 * k;
+          if (p < 0.34) {
+            const k = easeInOutSine(p / 0.34);
+            seam = 50 - 22 * k;
+          } else if (p < 0.72) {
+            const k = easeInOutSine((p - 0.34) / 0.38);
+            seam = 28 + 44 * k;
           } else {
-            const k = easeInOutSine((p - 0.75) / 0.25);
-            seam = 66 - 16 * k;
+            const k = easeInOutSine((p - 0.72) / 0.28);
+            seam = 72 - 22 * k;
           }
 
           loader.style.setProperty("--seam", `${seam.toFixed(2)}%`);
 
-          const displayPct = Math.min(100, Math.round(easeOutCubic(p) * (pageLoaded ? 100 : 94)));
+          const displayPct = Math.min(100, Math.round(easeOutCubic(p) * 100));
           if (pctEl) pctEl.textContent = String(displayPct).padStart(2, "0");
 
-          if (p >= 1 && pageLoaded) {
-            openCurtains();
-          } else if (elapsed >= 2600) {
+          if (p >= 1) {
             openCurtains();
           } else {
             requestAnimationFrame(tick);
           }
         }
 
+        function beginSweep() {
+          if (sweepStarted || finished) return;
+          sweepStarted = true;
+          // Wait 2 clean frames after load/p5 draw so GPU is completely idle for 60fps
+          requestAnimationFrame(() => {
+            loader.classList.add("is-active");
+            requestAnimationFrame(() => {
+              requestAnimationFrame(tick);
+            });
+          });
+        }
+
         requestAnimationFrame(() => {
           loader.classList.add("is-active");
-          requestAnimationFrame(tick);
         });
+
+        if (document.readyState === "complete") {
+          beginSweep();
+        } else {
+          window.addEventListener("load", beginSweep, { once: true });
+          // Fallback in case external assets take too long
+          setTimeout(beginSweep, 1200);
+        }
+
+        // Hard safety failsafe so loader can never get stuck
+        setTimeout(openCurtains, 4200);
       }
 
       runDualityPreloader();
