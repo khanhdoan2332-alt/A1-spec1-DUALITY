@@ -366,7 +366,7 @@ body {
   aspect-ratio: 16 / 9;
   display: block !important;
   image-rendering: high-quality;
-  will-change: filter, transform;
+  transform: translateZ(0);
 }
 
 .reload-crossfade-canvas {
@@ -375,11 +375,12 @@ body {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain;
-  display: none;
+  visibility: hidden;
   opacity: 0;
   pointer-events: none;
   z-index: 2;
-  will-change: opacity, filter, transform;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 body.art-fullscreen {

@@ -961,15 +961,20 @@ function doubleClicked(e) {
   }
 }
 
-      let reloadTransitionTimer = null;
+      let isArtReloading = false;
+      let reloadAnim = null;
       let reloadFrameRaf = null;
       function regenerateArt() {
         const srcCanvas = document.querySelector("#canvas-holder canvas.p5Canvas");
         const ghost = document.getElementById("reload-crossfade");
-        const bgCanvas = document.getElementById("bg-wafer-mist");
 
-        if (reloadTransitionTimer) clearTimeout(reloadTransitionTimer);
         if (reloadFrameRaf) cancelAnimationFrame(reloadFrameRaf);
+        if (reloadAnim) {
+          reloadAnim.cancel();
+          reloadAnim = null;
+        }
+
+        isArtReloading = true;
 
         if (srcCanvas && ghost) {
           if (ghost.width !== srcCanvas.width || ghost.height !== srcCanvas.height) {
@@ -980,48 +985,39 @@ function doubleClicked(e) {
           gCtx.clearRect(0, 0, ghost.width, ghost.height);
           gCtx.drawImage(srcCanvas, 0, 0);
 
-          ghost.style.transition = "none";
-          ghost.style.display = "block";
+          ghost.style.visibility = "visible";
           ghost.style.opacity = "1";
-          ghost.style.filter = "blur(0px)";
-          ghost.style.transform = "scale(1)";
-
-          srcCanvas.style.transition = "none";
-          srcCanvas.style.filter = "blur(3px)";
-          srcCanvas.style.transform = "scale(1.008)";
         }
-
-        if (bgCanvas) bgCanvas.classList.add("is-reloading");
 
         initArtworkData();
         redraw();
-        if (typeof initWebpageBgData === "function") {
-          initWebpageBgData();
-          renderWebpageBg();
-        }
-
-        if (ghost) void ghost.offsetWidth;
 
         reloadFrameRaf = requestAnimationFrame(() => {
           reloadFrameRaf = requestAnimationFrame(() => {
-            if (ghost) {
-              ghost.style.transition = "opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1), filter 0.58s cubic-bezier(0.22, 1, 0.36, 1), transform 0.58s cubic-bezier(0.22, 1, 0.36, 1)";
-              ghost.style.opacity = "0";
-              ghost.style.filter = "blur(6px)";
-              ghost.style.transform = "scale(0.994)";
+            if (ghost && ghost.animate) {
+              reloadAnim = ghost.animate(
+                [{ opacity: 1 }, { opacity: 0 }],
+                {
+                  duration: 540,
+                  easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+                  fill: "forwards"
+                }
+              );
+              reloadAnim.onfinish = () => {
+                ghost.style.opacity = "0";
+                ghost.style.visibility = "hidden";
+                reloadAnim = null;
+                isArtReloading = false;
+              };
+            } else {
+              if (ghost) {
+                ghost.style.opacity = "0";
+                ghost.style.visibility = "hidden";
+              }
+              isArtReloading = false;
             }
-            if (srcCanvas) {
-              srcCanvas.style.transition = "filter 0.58s cubic-bezier(0.22, 1, 0.36, 1), transform 0.58s cubic-bezier(0.22, 1, 0.36, 1)";
-              srcCanvas.style.filter = "blur(0px)";
-              srcCanvas.style.transform = "scale(1)";
-            }
-            if (bgCanvas) bgCanvas.classList.remove("is-reloading");
           });
         });
-
-        reloadTransitionTimer = setTimeout(() => {
-          if (ghost) ghost.style.display = "none";
-        }, 620);
       }
 
       function saveHighRes() {
@@ -1428,13 +1424,15 @@ function doubleClicked(e) {
       }
 
       function animateParallaxLoop() {
-        bgParallax.targetScroll = window.scrollY || 0;
-        bgParallax.currentScroll += (bgParallax.targetScroll - bgParallax.currentScroll) * 0.09;
-        bgParallax.currentMouseX += (bgParallax.targetMouseX - bgParallax.currentMouseX) * 0.07;
-        bgParallax.currentMouseY += (bgParallax.targetMouseY - bgParallax.currentMouseY) * 0.07;
-        bgParallax.orbitTick += 0.004;
+        if (!isArtReloading && !document.body.classList.contains("art-fullscreen")) {
+          bgParallax.targetScroll = window.scrollY || 0;
+          bgParallax.currentScroll += (bgParallax.targetScroll - bgParallax.currentScroll) * 0.09;
+          bgParallax.currentMouseX += (bgParallax.targetMouseX - bgParallax.currentMouseX) * 0.07;
+          bgParallax.currentMouseY += (bgParallax.targetMouseY - bgParallax.currentMouseY) * 0.07;
+          bgParallax.orbitTick += 0.004;
 
-        renderWebpageBg();
+          renderWebpageBg();
+        }
         requestAnimationFrame(animateParallaxLoop);
       }
 
