@@ -580,34 +580,38 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 /* =========================================================================
-   SECTION 3: THE SHIFT, SDG 8 & TARGET AUDIENCE (FITS 1 VIEWPORT CLEANLY)
+   SECTION 3: THE SHIFT, SDG 8 & TARGET AUDIENCE (3 EQUAL ~30VH BANDS)
    ========================================================================= */
+.shift-band-row .vibe-split {
+  min-height: calc((100vh - 54px) / 3.15);
+}
+
 .shift-lead-col {
-  padding: 28px 36px 30px;
+  padding: 46px 36px 50px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .shift-sdg-col {
-  padding: 28px 36px 30px;
+  padding: 46px 36px 50px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .sdg-minimal-block {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 520px;
+  gap: 12px;
+  max-width: 500px;
 }
 
 .sdg-minimal-quote {
   font-family: var(--font-sans);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.72;
   color: var(--ink-muted);
 }
 
@@ -621,15 +625,15 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 }
 
 .shift-copy-col {
-  padding: 28px 36px 30px;
+  padding: 46px 36px 50px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .feature-anta-heading {
   font-family: var(--font-display);
-  font-size: clamp(40px, 4.6vw, 68px);
+  font-size: clamp(42px, 4.8vw, 72px);
   font-weight: 400;
   line-height: 0.96;
   letter-spacing: -0.02em;
@@ -639,11 +643,11 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
 
 .feature-prose-text {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.74;
   color: var(--ink-black);
-  max-width: 640px;
+  max-width: 620px;
 }
 
 .vibe-pause-row .vibe-split {
