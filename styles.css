@@ -382,6 +382,18 @@ body {
   image-rendering: high-quality;
 }
 
+#canvas-holder:fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  background: #0d0e11;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas-holder:fullscreen canvas,
 :fullscreen #canvas-holder canvas,
 canvas:fullscreen {
   width: 100vw !important;

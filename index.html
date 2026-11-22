@@ -26,7 +26,7 @@
     <header class="vibe-topbar">
       <div class="vibe-topbar-inner">
         <div class="topbar-left">
-          <a href="#sec-artwork" class="brand-wordmark nav-link" data-target="sec-artwork">duality</a>
+          <a href="#sec-top" class="brand-wordmark nav-link" data-target="sec-top">duality</a>
           <span class="brand-group-tag">GROUP // HELLOWORLD</span>
         </div>
         <div class="topbar-right">
@@ -55,7 +55,7 @@
     <!-- MAIN VIBECON ARCHITECTURAL GRID -->
     <main class="vibe-main">
       <!-- SECTION 1A: HERO BRAND HEADER (50/50 SPLIT LIKE VIBECON.WEBP) -->
-      <section class="vibe-row" id="sec-artwork">
+      <section class="vibe-row" id="sec-top">
         <div class="vibe-split">
           <div class="vibe-cell-left hero-brand-cell">
             <h1 class="hero-duality-title">DUALITY</h1>
@@ -93,7 +93,7 @@
       </section>
 
       <!-- SECTION 1C: FRAMED 1920x1080 GENERATIVE ARTWORK STAGE -->
-      <section class="vibe-row artwork-stage-wrap">
+      <section class="vibe-row artwork-stage-wrap" id="sec-artwork">
         <div id="canvas-holder" class="p5-frame"></div>
         <div class="artwork-stage-bar">
           <span>CANVAS: 1920 × 1080 PX // P5.JS PROCEDURAL SYSTEM</span>
@@ -911,8 +911,7 @@ function draw() {
 }
 
 function doubleClicked() {
-  let fs = fullscreen();
-  fullscreen(!fs);
+  toggleFull();
 }
 
       let reloadTransitionTimer = null;
@@ -942,8 +941,21 @@ function doubleClicked() {
       }
 
       function toggleFull() {
-        let fs = fullscreen();
-        fullscreen(!fs);
+        scrollToTargetSection("sec-artwork");
+        const holder = document.getElementById("canvas-holder");
+        if (!document.fullscreenElement) {
+          if (holder && holder.requestFullscreen) {
+            holder.requestFullscreen();
+          } else {
+            fullscreen(true);
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else {
+            fullscreen(false);
+          }
+        }
       }
 
       function keyPressed() {
@@ -1288,15 +1300,15 @@ function doubleClicked() {
       }
 
       function scrollToTargetSection(sectionId) {
-        if (sectionId === "sec-artwork") {
-          customSmoothScrollTo(0, 780);
+        if (sectionId === "sec-top") {
+          customSmoothScrollTo(0, 680);
         } else {
           const targetEl = document.getElementById(sectionId);
           const topbar = document.querySelector(".vibe-topbar");
           if (targetEl) {
             const topbarH = topbar ? topbar.offsetHeight : 54;
             const targetY = targetEl.getBoundingClientRect().top + window.scrollY - topbarH;
-            customSmoothScrollTo(Math.max(0, targetY), 780);
+            customSmoothScrollTo(Math.max(0, targetY), 680);
           }
         }
       }
