@@ -741,6 +741,10 @@ body.art-fullscreen #canvas-holder canvas.p5Canvas {
   border-right-color: var(--line-dark);
 }
 
+.vibe-dark-zone .vibe-sq {
+  background: #9d6bff;
+}
+
 .dark-top-row .vibe-split {
   min-height: 20vh;
 }
