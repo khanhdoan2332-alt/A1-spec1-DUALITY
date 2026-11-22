@@ -358,28 +358,41 @@ body {
   max-width: 1760px;
   margin: 0 auto;
   position: relative;
+  overflow: hidden;
   border: 1px solid var(--line-light);
   background: #cdd2da;
   box-shadow: 0 20px 50px rgba(17, 17, 19, 0.08);
 }
 
-#canvas-holder,
 #bg-wafer-mist {
-  transition: opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1), filter 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-#canvas-holder.is-reloading,
 #bg-wafer-mist.is-reloading {
-  opacity: 0.32;
+  opacity: 0.45;
   filter: blur(4px);
 }
 
-#canvas-holder canvas {
+#canvas-holder canvas.p5Canvas {
   width: 100% !important;
   height: auto !important;
   aspect-ratio: 16 / 9;
   display: block !important;
   image-rendering: high-quality;
+  will-change: filter, transform;
+}
+
+.reload-crossfade-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  will-change: opacity, filter, transform;
 }
 
 body.art-fullscreen {
@@ -423,7 +436,7 @@ body.art-fullscreen #canvas-holder {
   z-index: 9995;
 }
 
-body.art-fullscreen #canvas-holder canvas {
+body.art-fullscreen #canvas-holder canvas.p5Canvas {
   width: 100% !important;
   height: 100% !important;
   max-width: 100%;

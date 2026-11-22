@@ -94,7 +94,9 @@
 
       <!-- SECTION 1C: FRAMED 1920x1080 GENERATIVE ARTWORK STAGE -->
       <section class="vibe-row artwork-stage-wrap" id="sec-artwork">
-        <div id="canvas-holder" class="p5-frame"></div>
+        <div id="canvas-holder" class="p5-frame">
+          <canvas id="reload-crossfade" class="reload-crossfade-canvas" aria-hidden="true"></canvas>
+        </div>
         <div class="artwork-stage-bar">
           <span>CANVAS: 1920 × 1080 PX // P5.JS PROCEDURAL SYSTEM</span>
           <div class="stage-bar-controls">
@@ -926,25 +928,66 @@ function doubleClicked(e) {
 }
 
       let reloadTransitionTimer = null;
+      let reloadFrameRaf = null;
       function regenerateArt() {
-        const holder = document.getElementById("canvas-holder");
+        const srcCanvas = document.querySelector("#canvas-holder canvas.p5Canvas");
+        const ghost = document.getElementById("reload-crossfade");
         const bgCanvas = document.getElementById("bg-wafer-mist");
-        if (holder) holder.classList.add("is-reloading");
-        if (bgCanvas) bgCanvas.classList.add("is-reloading");
 
         if (reloadTransitionTimer) clearTimeout(reloadTransitionTimer);
-        reloadTransitionTimer = setTimeout(() => {
-          initArtworkData();
-          redraw();
-          if (typeof initWebpageBgData === "function") {
-            initWebpageBgData();
-            renderWebpageBg();
+        if (reloadFrameRaf) cancelAnimationFrame(reloadFrameRaf);
+
+        if (srcCanvas && ghost) {
+          if (ghost.width !== srcCanvas.width || ghost.height !== srcCanvas.height) {
+            ghost.width = srcCanvas.width;
+            ghost.height = srcCanvas.height;
           }
-          requestAnimationFrame(() => {
-            if (holder) holder.classList.remove("is-reloading");
+          const gCtx = ghost.getContext("2d");
+          gCtx.clearRect(0, 0, ghost.width, ghost.height);
+          gCtx.drawImage(srcCanvas, 0, 0);
+
+          ghost.style.transition = "none";
+          ghost.style.display = "block";
+          ghost.style.opacity = "1";
+          ghost.style.filter = "blur(0px)";
+          ghost.style.transform = "scale(1)";
+
+          srcCanvas.style.transition = "none";
+          srcCanvas.style.filter = "blur(3px)";
+          srcCanvas.style.transform = "scale(1.008)";
+        }
+
+        if (bgCanvas) bgCanvas.classList.add("is-reloading");
+
+        initArtworkData();
+        redraw();
+        if (typeof initWebpageBgData === "function") {
+          initWebpageBgData();
+          renderWebpageBg();
+        }
+
+        if (ghost) void ghost.offsetWidth;
+
+        reloadFrameRaf = requestAnimationFrame(() => {
+          reloadFrameRaf = requestAnimationFrame(() => {
+            if (ghost) {
+              ghost.style.transition = "opacity 0.58s cubic-bezier(0.22, 1, 0.36, 1), filter 0.58s cubic-bezier(0.22, 1, 0.36, 1), transform 0.58s cubic-bezier(0.22, 1, 0.36, 1)";
+              ghost.style.opacity = "0";
+              ghost.style.filter = "blur(6px)";
+              ghost.style.transform = "scale(0.994)";
+            }
+            if (srcCanvas) {
+              srcCanvas.style.transition = "filter 0.58s cubic-bezier(0.22, 1, 0.36, 1), transform 0.58s cubic-bezier(0.22, 1, 0.36, 1)";
+              srcCanvas.style.filter = "blur(0px)";
+              srcCanvas.style.transform = "scale(1)";
+            }
             if (bgCanvas) bgCanvas.classList.remove("is-reloading");
           });
-        }, 150);
+        });
+
+        reloadTransitionTimer = setTimeout(() => {
+          if (ghost) ghost.style.display = "none";
+        }, 620);
       }
 
       function saveHighRes() {
