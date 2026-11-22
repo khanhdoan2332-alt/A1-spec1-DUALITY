@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Anta&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261122-6" />
+    <link rel="stylesheet" href="styles.css?v=20261122-7" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
   </head>
   <body class="is-loading">
@@ -20,7 +20,8 @@
         <div class="loader-corner loader-tl">GROUP // HELLOWORLD</div>
         <div class="loader-center">
           <div class="loader-wordmark">
-            <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
+            <span class="lw-left"><span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span></span>
+            <span class="lw-right"><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span></span>
           </div>
           <p class="loader-subline">
             <span class="sub-left"><span class="sub-left-text">WORK WITH CHANGE,</span></span>
@@ -34,7 +35,8 @@
         <div class="loader-corner loader-tr">EXHIBITION // 2026</div>
         <div class="loader-center">
           <div class="loader-wordmark">
-            <span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span>
+            <span class="lw-left"><span class="lw-char" style="--i:0">d</span><span class="lw-char" style="--i:1">u</span><span class="lw-char" style="--i:2">a</span></span>
+            <span class="lw-right"><span class="lw-char" style="--i:3">l</span><span class="lw-char" style="--i:4">i</span><span class="lw-char" style="--i:5">t</span><span class="lw-char" style="--i:6">y</span></span>
           </div>
           <p class="loader-subline">
             <span class="sub-left"><span class="sub-left-text">WORK WITH CHANGE,</span></span>
@@ -1598,13 +1600,13 @@ function doubleClicked(e) {
         }
 
         function alignSublineToDuality() {
-          const wordmark = loader.querySelector(".loader-panel-left .loader-wordmark");
+          const lityEl = loader.querySelector(".loader-panel-left .lw-right");
           const subRight = loader.querySelector(".loader-panel-left .sub-right-text");
-          if (!wordmark || !subRight) return;
-          const halfW = wordmark.getBoundingClientRect().width / 2;
+          if (!lityEl || !subRight) return;
+          const lityW = lityEl.getBoundingClientRect().width;
           const rightW = subRight.getBoundingClientRect().width;
-          if (halfW > 0 && rightW > 0) {
-            const gap = Math.max(14, halfW - rightW);
+          if (lityW > 0 && rightW > 0) {
+            const gap = Math.max(14, lityW - rightW);
             loader.style.setProperty("--sub-gap", `${gap.toFixed(1)}px`);
           }
         }
