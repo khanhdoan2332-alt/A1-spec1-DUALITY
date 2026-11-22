@@ -506,6 +506,10 @@ canvas:fullscreen {
   color: var(--dark-muted);
 }
 
+.dark-spacer-row .vibe-split {
+  min-height: 92px;
+}
+
 /* =========================================================================
    SECTION 3: THE SHIFT & SDG 8 (TAUT SWISS GRID NEGATIVE SPACE)
    ========================================================================= */
