@@ -121,8 +121,9 @@ body.is-loading {
 .loader-center {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: stretch;
+  width: max-content;
+  gap: 14px;
   user-select: none;
 }
 
@@ -134,8 +135,9 @@ body.is-loading {
   letter-spacing: 0.03em;
   text-transform: lowercase;
   display: inline-flex;
+  justify-content: center;
   overflow: hidden;
-  padding: 6px 4px;
+  padding: 6px 0;
 }
 
 .lw-char {
@@ -147,34 +149,40 @@ body.is-loading {
     opacity 0.45s ease calc(var(--i) * 42ms);
 }
 
+.lw-char:last-child {
+  letter-spacing: 0;
+}
+
 .duality-loader.is-active .lw-char {
   transform: translateY(0);
   opacity: 1;
 }
 
 .loader-subline {
-  width: 100vw;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: clamp(8.5px, 0.72vw, 10.5px);
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.45s ease 0.28s, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
 }
 
 .loader-subline .sub-left {
-  text-align: right;
-  padding-right: 16px;
+  text-align: left;
+  padding-right: 12px;
 }
 
 .loader-subline .sub-right {
-  text-align: left;
-  padding-left: 16px;
+  text-align: right;
+  padding-left: 12px;
+  margin-right: -0.14em;
 }
 
 .loader-panel-left .loader-subline {
